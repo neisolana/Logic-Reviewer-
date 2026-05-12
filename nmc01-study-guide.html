@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NMC01 Logic & Critical Thinking – Nikka Ella Isolana</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush: #f5d6d6;
+    --lavender: #ddd6f5;
+    --mint: #d6f5e8;
+    --sky: #d6ecf5;
+    --peach: #f5e8d6;
+    --rose: #e8c5c5;
+    --violet: #c5b8e8;
+    --sage: #b8ddc5;
+    --powder: #b8d8e8;
+    --cream: #fdf8f3;
+    --ink: #2d2535;
+    --ink-soft: #5a5065;
+    --card-bg: #fffaf7;
+    --border: rgba(180,160,200,0.25);
+    --shadow: 0 4px 24px rgba(160,140,180,0.13);
+    --shadow-hover: 0 8px 36px rgba(160,140,180,0.22);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* BACKGROUND BLOBS */
+  .bg-decor {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    overflow: hidden;
+  }
+  .blob {
+    position: absolute; border-radius: 50%;
+    filter: blur(70px); opacity: 0.45;
+  }
+  .blob-1 { width: 600px; height: 600px; background: var(--lavender); top: -200px; right: -150px; }
+  .blob-2 { width: 500px; height: 500px; background: var(--blush); bottom: -200px; left: -100px; }
+  .blob-3 { width: 350px; height: 350px; background: var(--mint); top: 40%; left: 30%; }
+
+  /* HEADER */
+  header {
+    position: relative; z-index: 10;
+    text-align: center;
+    padding: 52px 24px 36px;
+    border-bottom: 1px solid var(--border);
+  }
+  .badge {
+    display: inline-block;
+    background: var(--lavender);
+    color: var(--ink-soft);
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700; color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 8px;
+  }
+  header h1 em { color: #9b7ec8; font-style: italic; }
+  header p {
+    font-size: 14px; color: var(--ink-soft);
+    font-weight: 300; letter-spacing: 0.02em;
+  }
+  .name-tag {
+    margin-top: 16px;
+    display: inline-block;
+    background: var(--blush);
+    color: var(--ink-soft);
+    font-size: 12px; font-weight: 500;
+    padding: 6px 18px; border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* NAV TABS */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(253,248,243,0.88);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex; gap: 4px;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 14px 18px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 500;
+    color: var(--ink-soft);
+    background: none; border: none;
+    cursor: pointer;
+    border-bottom: 2.5px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    color: #9b7ec8;
+    border-bottom-color: #9b7ec8;
+    font-weight: 600;
+  }
+
+  /* MAIN */
+  main {
+    position: relative; z-index: 5;
+    max-width: 900px; margin: 0 auto;
+    padding: 36px 20px 80px;
+  }
+  .section { display: none; animation: fadeUp 0.35s ease; }
+  .section.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION HEADERS */
+  .sec-header {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 28px;
+  }
+  .sec-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .sec-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.65rem; font-weight: 700;
+  }
+  .sec-header p { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+
+  /* CARDS */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px 26px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.25s, transform 0.25s;
+  }
+  .card:hover { box-shadow: var(--shadow-hover); transform: translateY(-2px); }
+  .card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 700;
+    margin-bottom: 10px; color: var(--ink);
+  }
+  .card p, .card li {
+    font-size: 14px; line-height: 1.75;
+    color: var(--ink-soft);
+  }
+  .card ul, .card ol { padding-left: 18px; }
+
+  /* COLOR ACCENT CARDS */
+  .card-blush { border-left: 4px solid #e8a0a0; background: linear-gradient(135deg, #fff9f9 60%, #fceaea); }
+  .card-lavender { border-left: 4px solid #b5a0e8; background: linear-gradient(135deg, #faf9ff 60%, #ece8f8); }
+  .card-mint { border-left: 4px solid #80c8a0; background: linear-gradient(135deg, #f7fff9 60%, #e0f5ea); }
+  .card-sky { border-left: 4px solid #80b8d8; background: linear-gradient(135deg, #f5fbff 60%, #daeef8); }
+  .card-peach { border-left: 4px solid #e8b880; background: linear-gradient(135deg, #fffaf5 60%, #f8eedd); }
+
+  /* CATEGORY TABLE */
+  .table-wrap { overflow-x: auto; border-radius: 14px; border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    background: var(--lavender);
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 12px 16px; text-align: left;
+    color: var(--ink-soft);
+  }
+  td {
+    padding: 11px 16px;
+    font-size: 13.5px; line-height: 1.6;
+    border-top: 1px solid var(--border);
+    color: var(--ink-soft);
+  }
+  tr:nth-child(even) td { background: rgba(221,214,245,0.12); }
+  tr:hover td { background: rgba(221,214,245,0.22); }
+  .chip {
+    display: inline-block;
+    font-size: 11.5px; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+  }
+  .chip-s { background: #f5d6d6; color: #7a3a3a; }
+  .chip-a { background: #ddf5dd; color: #2a6a3a; }
+  .chip-e { background: #f5d6d6; color: #7a3a3a; }
+  .chip-i { background: #d6e8f5; color: #2a4a7a; }
+  .chip-o { background: #f5eed6; color: #7a5a2a; }
+
+  /* MNEMONIC BOX */
+  .mnemonic {
+    background: linear-gradient(135deg, #fdf0f8 0%, #ede0fa 100%);
+    border: 1.5px dashed #c0a0e0;
+    border-radius: 14px;
+    padding: 20px 22px;
+    margin: 18px 0;
+  }
+  .mnemonic-label {
+    font-size: 10.5px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #9b7ec8; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .mnemonic-body {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; line-height: 1.7;
+    color: var(--ink);
+  }
+  .mnemonic-body b { color: #7b5ea8; }
+
+  /* EXAM TIP */
+  .exam-tip {
+    background: linear-gradient(135deg, #fff8e0 0%, #fdf0c0 100%);
+    border-left: 4px solid #e8c840;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 13.5px; line-height: 1.65;
+    color: #5a4a10;
+  }
+  .exam-tip strong { color: #8a6a10; }
+
+  /* ACCORDION */
+  .accordion { margin-bottom: 12px; }
+  .acc-trigger {
+    width: 100%;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: var(--ink);
+    box-shadow: var(--shadow);
+    transition: all 0.2s;
+    text-align: left;
+  }
+  .acc-trigger:hover { background: #fdf4ff; }
+  .acc-trigger.open { border-radius: 14px 14px 0 0; border-bottom-color: transparent; background: #fdf4ff; }
+  .acc-arrow { transition: transform 0.25s; font-size: 16px; color: #9b7ec8; }
+  .acc-trigger.open .acc-arrow { transform: rotate(180deg); }
+  .acc-body {
+    display: none;
+    background: #fdf4ff;
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 14px 14px;
+    padding: 16px 20px 18px;
+    font-size: 13.5px; line-height: 1.75;
+    color: var(--ink-soft);
+  }
+  .acc-body.open { display: block; }
+  .acc-body ul { padding-left: 18px; }
+  .acc-body li { margin-bottom: 4px; }
+
+  /* QUIZ SECTION */
+  .quiz-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px 24px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .quiz-q {
+    font-size: 14.5px; font-weight: 600;
+    color: var(--ink); margin-bottom: 14px;
+    line-height: 1.55;
+  }
+  .quiz-num {
+    display: inline-block;
+    background: var(--lavender);
+    color: #6b50b8;
+    font-size: 11px; font-weight: 700;
+    padding: 2px 9px; border-radius: 20px;
+    margin-right: 8px;
+    font-family: 'DM Mono', monospace;
+  }
+  .options { display: flex; flex-direction: column; gap: 9px; }
+  .option-btn {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13.5px; color: var(--ink-soft);
+    cursor: pointer; text-align: left;
+    transition: all 0.18s;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .option-btn:hover:not(:disabled) { background: #f0e8ff; border-color: #c0a0e0; color: var(--ink); }
+  .option-btn.correct { background: #e0f5e8; border-color: #70c890; color: #1a6a30; font-weight: 600; }
+  .option-btn.wrong { background: #f5e0e0; border-color: #e08080; color: #6a1a1a; }
+  .option-btn:disabled { cursor: default; }
+  .option-letter {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--lavender);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #6b50b8;
+    flex-shrink: 0;
+  }
+  .feedback {
+    margin-top: 10px; font-size: 13px;
+    padding: 8px 14px; border-radius: 8px;
+    display: none;
+  }
+  .feedback.correct { background: #e0f5e8; color: #1a6a30; display: block; }
+  .feedback.wrong { background: #f5e0e0; color: #6a1a1a; display: block; }
+  .quiz-score {
+    background: linear-gradient(135deg, #f0e8ff, #e8f0ff);
+    border-radius: 16px;
+    padding: 22px 24px;
+    text-align: center;
+    margin-bottom: 24px;
+    border: 1px solid rgba(180,160,220,0.3);
+  }
+  .score-display { font-size: 3rem; font-weight: 700; color: #9b7ec8; font-family: 'DM Mono', monospace; }
+  .score-label { font-size: 13px; color: var(--ink-soft); margin-top: 4px; }
+  .reset-btn {
+    background: linear-gradient(135deg, #c0a0e8, #a080d0);
+    color: white; border: none;
+    padding: 10px 24px; border-radius: 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; margin-top: 14px;
+    transition: all 0.2s; box-shadow: 0 4px 14px rgba(180,130,220,0.35);
+  }
+  .reset-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(180,130,220,0.45); }
+
+  /* FLASHCARD */
+  .flashcard-wrap { perspective: 1000px; margin-bottom: 20px; }
+  .flashcard {
+    width: 100%; min-height: 180px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+    cursor: pointer;
+  }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute; width: 100%; min-height: 180px;
+    backface-visibility: hidden;
+    border-radius: 18px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 28px; text-align: center;
+    box-shadow: var(--shadow);
+  }
+  .fc-front {
+    background: linear-gradient(135deg, #f5edff 0%, #ede8f8 100%);
+    border: 1px solid rgba(180,140,240,0.25);
+  }
+  .fc-back {
+    background: linear-gradient(135deg, #e8f5ee 0%, #d8f0e4 100%);
+    border: 1px solid rgba(100,200,140,0.25);
+    transform: rotateY(180deg);
+  }
+  .fc-label {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #9b7ec8; margin-bottom: 12px;
+  }
+  .fc-back .fc-label { color: #40a070; }
+  .fc-question {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--ink);
+    line-height: 1.5;
+  }
+  .fc-answer {
+    font-size: 14px; color: var(--ink-soft);
+    line-height: 1.7;
+  }
+  .fc-hint { font-size: 11px; color: rgba(120,100,160,0.6); margin-top: 12px; }
+  .fc-controls {
+    display: flex; justify-content: center; gap: 10px; margin-top: 14px;
+  }
+  .fc-btn {
+    padding: 9px 22px; border-radius: 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; border: 1.5px solid;
+    transition: all 0.18s;
+  }
+  .fc-btn-prev { background: white; border-color: var(--border); color: var(--ink-soft); }
+  .fc-btn-next { background: #9b7ec8; border-color: #9b7ec8; color: white; }
+  .fc-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+  .fc-counter { text-align: center; font-size: 12px; color: var(--ink-soft); margin-top: 8px; font-family: 'DM Mono', monospace; }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* PILL TAGS */
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .tag {
+    font-size: 12px; font-weight: 500;
+    padding: 4px 12px; border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+  }
+  .tag-purple { background: #ede8f8; color: #6b50b8; }
+  .tag-rose { background: #f8e8e8; color: #a04040; }
+  .tag-green { background: #e8f5ee; color: #2a6a40; }
+  .tag-blue { background: #e8f0f8; color: #2a4a7a; }
+  .tag-peach { background: #f8f0e8; color: #7a5020; }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--border); margin: 24px 0; }
+
+  /* SCROLL PROGRESS */
+  #progress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, #c0a0e8, #80c8d8);
+    z-index: 100; transition: width 0.1s;
+    width: 0%;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 24px;
+    font-size: 12px; color: rgba(90,80,101,0.5);
+    border-top: 1px solid var(--border);
+    position: relative; z-index: 5;
+  }
+  footer em { font-style: italic; }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<div class="bg-decor">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<header>
+  <div class="badge">NMC01 · Logic and Critical Thinking</div>
+  <h1>Logic &amp; <em>Critical Thinking</em></h1>
+  <p>Weeks 8–11 · Predicaments · Propositions · Definitions</p>
+  <div class="name-tag">✦ Nikka Ella Isolana · BSN 2B</div>
+</header>
+
+<nav>
+  <button class="tab-btn active" onclick="switchTab('predicaments', this)">📚 Predicaments</button>
+  <button class="tab-btn" onclick="switchTab('propositions', this)">📝 Propositions</button>
+  <button class="tab-btn" onclick="switchTab('definitions', this)">🔍 Definitions</button>
+  <button class="tab-btn" onclick="switchTab('flashcards', this)">🃏 Flashcards</button>
+  <button class="tab-btn" onclick="switchTab('quiz', this)">✏️ Practice Quiz</button>
+</nav>
+
+<main>
+
+<!-- ══════════════════════ PREDICAMENTS ══════════════════════ -->
+<div id="predicaments" class="section active">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:#ede8f8;">📚</div>
+    <div>
+      <h2>Predicaments & Substance</h2>
+      <p>Aristotle's 10 categories — the framework for all reality</p>
+    </div>
+  </div>
+
+  <div class="card card-lavender">
+    <h3>What are Predicaments?</h3>
+    <p>Predicaments are the <strong>fundamental categories</strong> into which all things can be divided. Aristotle outlined <strong>10 categories</strong> as the basic ways of describing reality. They provide the framework for analyzing propositions, arguments, and the structure of thought.</p>
+  </div>
+
+  <div class="grid-2">
+    <div class="card card-blush">
+      <h3>⚗️ Substance</h3>
+      <p>The <em>essence</em> or underlying reality of a thing. It <strong>exists in itself</strong> — a "being-in-itself." Not dependent on anything else.</p>
+      <div class="tag-row">
+        <span class="tag tag-rose">man</span>
+        <span class="tag tag-rose">tree</span>
+        <span class="tag tag-rose">Socrates</span>
+        <span class="tag tag-rose">stone</span>
+      </div>
+    </div>
+    <div class="card card-mint">
+      <h3>✨ Accidents (9 types)</h3>
+      <p>Properties that exist <strong>in another</strong> — a "being-in-a-substance." Cannot exist on their own; they depend on substance.</p>
+      <div class="tag-row">
+        <span class="tag tag-green">quality</span>
+        <span class="tag tag-green">quantity</span>
+        <span class="tag tag-green">relation</span>
+        <span class="tag tag-green">+ 6 more</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mnemonic">
+    <div class="mnemonic-label">✦ Memory Trick</div>
+    <div class="mnemonic-body">
+      <b>S</b>ocrates <b>Q</b>uickly <b>Q</b>ueries <b>R</b>eal <b>P</b>hilosophy — <b>T</b>ime <b>P</b>asses <b>H</b>appily <b>A</b>long <b>P</b>athways<br>
+      <span style="font-size:13px;color:#9b7ec8;">Substance · Quantity · Quality · Relation · Place · Time · Position · Habit · Action · Passion</span>
+    </div>
+  </div>
+
+  <div class="exam-tip">
+    <strong>⭐ Exam Tip:</strong> Substance = the THING itself. All 9 accidents exist <em>within</em> a substance. Without substance → no accidents.
+  </div>
+
+  <h3 style="font-family:'Playfair Display',serif; margin: 22px 0 14px; font-size:1.1rem;">Aristotle's 10 Categories</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>What it answers</th>
+          <th>Example (Socrates)</th>
+          <th>Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Substance</strong></td><td>What is it?</td><td>"Socrates is a <em>man</em>."</td><td><span class="chip chip-s">Substance</span></td></tr>
+        <tr><td><strong>Quantity</strong></td><td>How much/many?</td><td>"Socrates is 5'7"."</td><td><span class="chip chip-a">Accident</span></td></tr>
+        <tr><td><strong>Quality</strong></td><td>What kind/sort?</td><td>"Socrates is <em>wise</em>."</td><td><span class="chip chip-a">Accident</span></td></tr>
+        <tr><td><strong>Relation</strong></td><td>Compared to what?</td><td>"Socrates is taller than Plato."</td><td><span class="chip chip-a">Accident</span></td></tr>
+        <tr><td><strong>Place</strong></td><td>Where?</td><td>"Socrates is in Athens."</td><td><span class="chip chip-a">Accident</span></td></tr>
+        <tr><td><strong>Time</strong></td><td>When?</td><td>"Socrates was born 470 BC."</td><td><span class="chip chip-a">Accident</span></td></tr>
+        <tr><td><strong>Position</strong></td><td>How arranged?</td><td>"Socrates is sitting."</td><td><span class="chip chip-a">Accident</span></td></tr>
+        <tr><td><strong>Habit</strong></td><td>What equipped with?</td><td>"Socrates is armed."</td><td><span class="chip chip-a">Accident</span></td></tr>
+        <tr><td><strong>Action</strong></td><td>What is it doing?</td><td>"Socrates is talking."</td><td><span class="chip chip-a">Accident</span></td></tr>
+        <tr><td><strong>Passion</strong></td><td>What happens to it?</td><td>"Socrates is bruised."</td><td><span class="chip chip-a">Accident</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="divider"></div>
+  <h3 style="font-family:'Playfair Display',serif; margin-bottom:14px; font-size:1.1rem;">The 9 Accidents — Deep Dive</h3>
+
+  <div class="accordion">
+    <button class="acc-trigger" onclick="toggleAcc(this)">
+      <span>🔢 Quantity — how much, spatial extension</span><span class="acc-arrow">▾</span>
+    </button>
+    <div class="acc-body">
+      <p>Quantity makes things <strong>concrete and measurable</strong>. A zebra exists with height, width, and depth — we can see and measure it. Materiality brings quantity.</p>
+      <div class="tag-row"><span class="tag tag-blue">two-foot long</span><span class="tag tag-blue">50 kgs</span><span class="tag tag-blue">three-piece</span></div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="acc-trigger" onclick="toggleAcc(this)">
+      <span>🎨 Quality — what kind, what sort, what characteristic</span><span class="acc-arrow">▾</span>
+    </button>
+    <div class="acc-body">
+      <p>Quality is recognized <em>before</em> quantity in daily life. We identify a zebra's quantitative features only because we first recognize its colors and shape.</p>
+      <div class="tag-row"><span class="tag tag-purple">white</span><span class="tag tag-purple">hard</span><span class="tag tag-purple">intelligent</span><span class="tag tag-purple">hot</span></div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="acc-trigger" onclick="toggleAcc(this)">
+      <span>🔗 Relation — comparison to something else</span><span class="acc-arrow">▾</span>
+    </button>
+    <div class="acc-body">
+      <p>Something can be compared with something else. Relation can only be known through comparison — you can only know if someone is taller or shorter relative to another.</p>
+      <div class="tag-row"><span class="tag tag-peach">father</span><span class="tag tag-peach">double</span><span class="tag tag-peach">teacher</span></div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="acc-trigger" onclick="toggleAcc(this)">
+      <span>📍 Place — where? Position in space</span><span class="acc-arrow">▾</span>
+    </button>
+    <div class="acc-body">
+      <p>Place answers <strong>"Where?"</strong> — a spatial relation. <em>Example: "Socrates lived in Athens." / "The student is in the library."</em></p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="acc-trigger" onclick="toggleAcc(this)">
+      <span>⏰ Time — when? Position in time</span><span class="acc-arrow">▾</span>
+    </button>
+    <div class="acc-body">
+      <p>Time answers <strong>"When?"</strong> — a temporal relation. <em>Example: "Socrates was born 470 BC." / "The concert is tomorrow."</em></p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="acc-trigger" onclick="toggleAcc(this)">
+      <span>🧘 Position — how are the parts arranged?</span><span class="acc-arrow">▾</span>
+    </button>
+    <div class="acc-body">
+      <p>The <strong>arrangement/disposition of parts</strong> of a body in relation to one another and surroundings. Answers "How is it positioned?"</p>
+      <div class="tag-row"><span class="tag tag-green">sitting</span><span class="tag tag-green">standing</span><span class="tag tag-green">lying down</span></div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="acc-trigger" onclick="toggleAcc(this)">
+      <span>🧥 Habit — what is it equipped with / wearing?</span><span class="acc-arrow">▾</span>
+    </button>
+    <div class="acc-body">
+      <p>A relation between a substance and its <strong>immediate environment</strong>. Describes external condition or possession.</p>
+      <div class="tag-row"><span class="tag tag-rose">armed</span><span class="tag tag-rose">clothed</span><span class="tag tag-rose">dressed</span></div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="acc-trigger" onclick="toggleAcc(this)">
+      <span>⚡ Action — what is it doing? Producing an effect</span><span class="acc-arrow">▾</span>
+    </button>
+    <div class="acc-body">
+      <p>Anything <strong>producing an effect</strong> is engaging in an action.</p>
+      <div class="tag-row"><span class="tag tag-purple">cutting</span><span class="tag tag-purple">running</span><span class="tag tag-purple">typing</span><span class="tag tag-purple">flying</span></div>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="acc-trigger" onclick="toggleAcc(this)">
+      <span>💧 Passion — what is happening to it? Being affected</span><span class="acc-arrow">▾</span>
+    </button>
+    <div class="acc-body">
+      <p>The <strong>opposite of action</strong> — being affected or undergoing something done by another.</p>
+      <div class="tag-row"><span class="tag tag-blue">being cut</span><span class="tag tag-blue">being heated</span><span class="tag tag-blue">cooling down</span></div>
+      <p style="margin-top:10px;font-style:italic;">Key: Action → you produce an effect. Passion → effect is produced ON you.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════ PROPOSITIONS ══════════════════════ -->
+<div id="propositions" class="section">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:#d6f5e8;">📝</div>
+    <div>
+      <h2>Judgment & Propositions</h2>
+      <p>Categorical propositions, AEIO types, and structure</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card card-mint">
+      <h3>💡 Judgment</h3>
+      <p>An <strong>act of the mind</strong> that affirms or denies something. It expresses a statement that can be true or false. Expressed through a <em>proposition</em>.</p>
+    </div>
+    <div class="card card-sky">
+      <h3>📄 Proposition</h3>
+      <p>A <strong>declarative sentence</strong> that can be either true or false — never both. Must be declarative (not a question or command).</p>
+    </div>
+  </div>
+
+  <div class="exam-tip">
+    <strong>⭐ Exam Tip:</strong> "Open the door" = NOT a proposition (command ❌). "The Earth revolves around the Sun" = proposition ✓
+  </div>
+
+  <div class="card card-lavender">
+    <h3>Structure of a Proposition</h3>
+    <div class="table-wrap" style="margin-top:12px;">
+      <table>
+        <thead><tr><th>Part</th><th>Role</th><th>Example: "All nurses are compassionate."</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Quantifier</strong></td><td>Specifies how many</td><td><u>All</u> nurses are compassionate.</td></tr>
+          <tr><td><strong>Subject (S)</strong></td><td>What we're talking about</td><td>All <u>nurses</u> are compassionate.</td></tr>
+          <tr><td><strong>Copula</strong></td><td>Links S and P</td><td>All nurses <u>are</u> compassionate.</td></tr>
+          <tr><td><strong>Predicate (P)</strong></td><td>What is affirmed/denied</td><td>All nurses are <u>compassionate</u>.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <h3 style="font-family:'Playfair Display',serif; margin-bottom:14px; font-size:1.15rem;">The AEIO Categorical Propositions</h3>
+
+  <div class="mnemonic">
+    <div class="mnemonic-label">✦ Memory Hook — AEIO</div>
+    <div class="mnemonic-body">
+      <b>A</b>ll included · <b>E</b>xcluded entirely · <b>I</b>ncluded some · <b>O</b>mitted some<br>
+      <span style="font-size:13px;color:#9b7ec8;">Universal Aff. · Universal Neg. · Particular Aff. · Particular Neg.</span>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Letter</th><th>Type</th><th>Form</th><th>Quality</th><th>Quantity</th></tr></thead>
+      <tbody>
+        <tr><td><span class="chip chip-a" style="font-size:14px;padding:4px 12px;">A</span></td><td>Universal Affirmative</td><td><em>All S are P</em></td><td>Affirmative</td><td>Universal</td></tr>
+        <tr><td><span class="chip chip-e" style="font-size:14px;padding:4px 12px;">E</span></td><td>Universal Negative</td><td><em>No S are P</em></td><td>Negative</td><td>Universal</td></tr>
+        <tr><td><span class="chip chip-i" style="font-size:14px;padding:4px 12px;">I</span></td><td>Particular Affirmative</td><td><em>Some S are P</em></td><td>Affirmative</td><td>Particular</td></tr>
+        <tr><td><span class="chip chip-o" style="font-size:14px;padding:4px 12px;">O</span></td><td>Particular Negative</td><td><em>Some S are not P</em></td><td>Negative</td><td>Particular</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid-2" style="margin-top:18px;">
+    <div class="card card-mint">
+      <h3><span class="chip chip-a" style="margin-right:6px;">A</span> Examples</h3>
+      <ul><li>All nurses are healthcare workers.</li><li>All mammals are warm-blooded.</li><li>All humans are mortal.</li></ul>
+    </div>
+    <div class="card card-blush">
+      <h3><span class="chip chip-e" style="margin-right:6px;">E</span> Examples</h3>
+      <ul><li>No dogs are cats.</li><li>No apples are vegetables.</li><li>No clouds are cotton candy.</li></ul>
+    </div>
+    <div class="card card-sky">
+      <h3><span class="chip chip-i" style="margin-right:6px;">I</span> Examples</h3>
+      <ul><li>Some students are athletes.</li><li>Some dogs are friendly.</li><li>Some fruits are sweet.</li></ul>
+    </div>
+    <div class="card card-peach">
+      <h3><span class="chip chip-o" style="margin-right:6px;">O</span> Examples</h3>
+      <ul><li>Some students are not athletes.</li><li>Some dogs are not friendly.</li><li>Some fruits are not sweet.</li></ul>
+    </div>
+  </div>
+
+  <div class="exam-tip" style="margin-top:18px;">
+    <strong>⭐ Key Distinction:</strong> "All" = EVERY member. "No" = ZERO members. "Some" = AT LEAST ONE or more.
+  </div>
+</div>
+
+<!-- ══════════════════════ DEFINITIONS ══════════════════════ -->
+<div id="definitions" class="section">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:#f5e8d6;">🔍</div>
+    <div>
+      <h2>Types of Definition</h2>
+      <p>Nominal · Real · Essential · Accidental · Rules of Good Definition</p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card card-peach">
+      <h3>📖 Nominal Definition</h3>
+      <p>Explains the <strong>meaning of the name/term</strong>. Focuses on language, not the actual nature of the thing.</p>
+      <div class="tag-row">
+        <span class="tag tag-peach">Hypertension = high BP</span>
+        <span class="tag tag-peach">Analgesic = pain reliever</span>
+        <span class="tag tag-peach">Dyspnea = difficulty breathing</span>
+      </div>
+    </div>
+    <div class="card card-mint">
+      <h3>🌿 Real Definition</h3>
+      <p>Explains <strong>what the thing truly is</strong>. Gives its essential characteristics or nature. Goes deeper.</p>
+      <div class="tag-row">
+        <span class="tag tag-green">Man = a rational being</span>
+        <span class="tag tag-green">Logic = science of right reasoning</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-sky" style="margin-top:4px;">
+    <h3>Nominal vs. Real — Side by Side</h3>
+    <div class="table-wrap" style="margin-top:12px;">
+      <table>
+        <thead><tr><th>Nominal</th><th>Real</th></tr></thead>
+        <tbody>
+          <tr><td>Explains what the <em>name</em> means</td><td>Explains what the <em>thing</em> is</td></tr>
+          <tr><td>Focuses on language</td><td>Focuses on essence/nature</td></tr>
+          <tr><td>"Hypertension" = high blood pressure</td><td>"Man" = rational being</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="grid-2">
+    <div class="card card-lavender">
+      <h3>⚙️ Essential Definition</h3>
+      <p>Constructed by <strong>Genus + Specific Difference</strong>. Captures qualities shared by all members AND what distinguishes them.</p>
+      <ul style="margin-top:10px;">
+        <li>"Triangle is a <u>polygon</u> (genus) with three sides (specific diff)."</li>
+        <li>"Man is an <u>animal</u> (genus) that is rational (specific diff)."</li>
+      </ul>
+    </div>
+    <div class="card card-blush">
+      <h3>🎭 Accidental Definition</h3>
+      <p>Uses characteristics <strong>NOT essential</strong> to the thing's nature — could change without changing what it fundamentally is.</p>
+      <ul style="margin-top:10px;"><li>Hair color of humans</li><li>"A car with speed of 130 kph"</li><li>The multicolored school uniform</li></ul>
+    </div>
+  </div>
+
+  <div class="mnemonic">
+    <div class="mnemonic-label">✦ Genus + Specific Difference Formula</div>
+    <div class="mnemonic-body">
+      <b>Genus</b> = the larger class the thing belongs to<br>
+      <b>Specific Difference</b> = what sets it apart from others in that class<br>
+      <span style="font-size:13px;color:#9b7ec8;">"The Bible is a <b>religious book</b> (genus) sacred to Christianity (specific diff)."</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <h3 style="font-family:'Playfair Display',serif; margin-bottom:14px; font-size:1.15rem;">3 Types by Method</h3>
+
+  <div class="accordion">
+    <button class="acc-trigger" onclick="toggleAcc(this)"><span>📋 Denotative (Definition by Example)</span><span class="acc-arrow">▾</span></button>
+    <div class="acc-body">
+      <p>Makes meaning clear by applying the term to real examples. Two subtypes:</p>
+      <ul><li><strong>Ostensive</strong> — showing a type of thing</li><li><strong>Extensive</strong> — naming everything in the group</li></ul>
+      <p style="margin-top:8px;font-style:italic;">Examples: "Oxygen therapy → nasal cannula, face mask, oxygen tank" · "Blood types → A, B, AB, O"</p>
+    </div>
+  </div>
+
+  <div class="accordion">
+    <button class="acc-trigger" onclick="toggleAcc(this)"><span>🖊️ Descriptive Definition</span><span class="acc-arrow">▾</span></button>
+    <div class="acc-body">
+      <p>Explains a term by describing observable characteristics or features — enumerates traits.</p>
+      <p style="margin-top:8px;font-style:italic;">Example: "An animal that can bark, guard, and show loyalty." → dog</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+  <h3 style="font-family:'Playfair Display',serif; margin-bottom:14px; font-size:1.15rem;">6 Rules of a Good Definition</h3>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Rule</th><th>Violation Example</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1</strong></td><td>Not <strong>Too Broad</strong></td><td>"Bird is an animal." → dogs are animals too!</td></tr>
+        <tr><td><strong>2</strong></td><td>Not <strong>Too Narrow</strong></td><td>"Bird is an animal that can fly." → penguins can't fly</td></tr>
+        <tr><td><strong>3</strong></td><td>Avoid <strong>Vagueness/Obscurity</strong></td><td>"Pain is an experience that varies significantly."</td></tr>
+        <tr><td><strong>4</strong></td><td>Must <strong>Not Be Circular</strong></td><td>"Nursing assessment is the process of assessing a patient."</td></tr>
+        <tr><td><strong>5</strong></td><td>Should <strong>Not Be Negative</strong> (unless necessary)</td><td>"A healthy patient is not a sick patient."</td></tr>
+        <tr><td><strong>6</strong></td><td>Should <strong>Not Be Slanted/Biased</strong></td><td>"Nurses are just assistants who follow orders."</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="exam-tip" style="margin-top:16px;">
+    <strong>⭐ Quick ID:</strong> Too broad = includes extra things. Too narrow = leaves out valid things. Circular = uses the defined word inside its own definition.
+  </div>
+</div>
+
+<!-- ══════════════════════ FLASHCARDS ══════════════════════ -->
+<div id="flashcards" class="section">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:#f5d6d6;">🃏</div>
+    <div><h2>Flashcards</h2><p>Tap each card to reveal the answer · 20 cards total</p></div>
+  </div>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="fc" onclick="flipCard()">
+      <div class="fc-face fc-front">
+        <div class="fc-label">TERM / CONCEPT</div>
+        <div class="fc-question" id="fc-q"></div>
+        <div class="fc-hint">tap to flip ↺</div>
+      </div>
+      <div class="fc-face fc-back">
+        <div class="fc-label">ANSWER</div>
+        <div class="fc-answer" id="fc-a"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fc-counter" id="fc-counter"></div>
+  <div class="fc-controls">
+    <button class="fc-btn fc-btn-prev" onclick="prevCard()">← Prev</button>
+    <button class="fc-btn fc-btn-next" onclick="nextCard()">Next →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════ QUIZ ══════════════════════ -->
+<div id="quiz" class="section">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:#d6ecf5;">✏️</div>
+    <div><h2>Practice Quiz</h2><p>15 questions — click an option to check your answer</p></div>
+  </div>
+  <div class="quiz-score">
+    <div class="score-display" id="score-display">0 / 15</div>
+    <div class="score-label">Score so far</div>
+    <button class="reset-btn" onclick="resetQuiz()">↺ Reset Quiz</button>
+  </div>
+  <div id="quiz-questions"></div>
+</div>
+
+</main>
+
+<footer>
+  <p><em>"Fall seven times, stand up eight."</em></p>
+  <p style="margin-top:6px;">NMC01 Logic &amp; Critical Thinking · Nikka Ella Isolana · BSN 2B</p>
+</footer>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  btn.closest('.section').querySelectorAll('.acc-body').forEach(b => b.classList.remove('open'));
+  btn.closest('.section').querySelectorAll('.acc-trigger').forEach(b => b.classList.remove('open'));
+  if (!isOpen) { body.classList.add('open'); btn.classList.add('open'); }
+}
+
+window.addEventListener('scroll', () => {
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('progress').style.width = (total > 0 ? (window.scrollY / total) * 100 : 0) + '%';
+});
+
+const cards = [
+  { q: "What is a Substance?", a: "A thing that exists in itself — a 'being-in-itself.' Exists on its own, not dependent on another. Examples: man, tree, Socrates." },
+  { q: "What is an Accident?", a: "A 'being-in-a-substance' — exists only in another. Socrates' height is an accident; it only exists as an attribute of Socrates." },
+  { q: "Name all 9 Categories of Accident.", a: "Quality, Quantity, Relation, Action, Passion, Position, Time, Place, Habit" },
+  { q: "What is the difference between Action and Passion?", a: "Action = producing an effect (Socrates is talking). Passion = receiving/undergoing an effect (Socrates is bruised)." },
+  { q: "What is a Proposition?", a: "A declarative sentence that can be either true or false — never both. Must be declarative (not a command or question)." },
+  { q: "What are the 4 parts of a Categorical Proposition?", a: "Subject (S), Copula (is/are/was/were), Predicate (P), Quantifier (All/No/Some)" },
+  { q: "What is a Type A proposition?", a: "Universal Affirmative — 'All S are P.' Every single member of the subject class belongs to the predicate class." },
+  { q: "What is a Type E proposition?", a: "Universal Negative — 'No S are P.' Not a single member of the subject class is in the predicate class." },
+  { q: "What is a Type I proposition?", a: "Particular Affirmative — 'Some S are P.' At least one or more members of the subject class belong to the predicate class." },
+  { q: "What is a Type O proposition?", a: "Particular Negative — 'Some S are not P.' At least one member does NOT belong to the predicate class." },
+  { q: "What is a Nominal Definition?", a: "Explains what the name/term means. Focuses on language, not the actual nature. Example: 'Hypertension = high blood pressure.'" },
+  { q: "What is a Real Definition?", a: "Explains what the thing actually is — gives its essential characteristics or nature. Example: 'Man is a rational being.'" },
+  { q: "What is an Essential Definition?", a: "Constructed by Genus + Specific Difference. Example: 'Triangle is a polygon (genus) with three sides (specific diff).'" },
+  { q: "What is Genus?", a: "The general class a thing belongs to, shared with others. Example: 'animal' is the genus of 'man.'" },
+  { q: "What is Specific Difference?", a: "The characteristic that distinguishes one thing from others in the same genus. Example: 'rational' distinguishes man from other animals." },
+  { q: "Why is 'Bird is an animal that can fly' a bad definition?", a: "It is Too Narrow — excludes valid members like penguins and ostriches that cannot fly." },
+  { q: "Why is 'Nursing assessment is the process of assessing a patient' circular?", a: "It uses the same word (assessing/assessment) that it is trying to define." },
+  { q: "What does the Copula do?", a: "Links the subject to the predicate. Does not show action — connects subject with a quality, identity, or condition. Examples: is, are, was, were." },
+  { q: "What is an Accidental Definition?", a: "Explains a thing using characteristics NOT essential to its nature — traits that could change without changing what the thing fundamentally is." },
+  { q: "What is a slanted/biased definition?", a: "A definition expressing personal bias rather than objective info. Example: 'Nurses are just assistants who only follow doctors' orders.'" }
+];
+
+let fcIdx = 0, fcFlipped = false;
+function renderCard() {
+  document.getElementById('fc-q').textContent = cards[fcIdx].q;
+  document.getElementById('fc-a').textContent = cards[fcIdx].a;
+  document.getElementById('fc-counter').textContent = `${fcIdx + 1} / ${cards.length}`;
+  document.getElementById('fc').classList.remove('flipped');
+  fcFlipped = false;
+}
+function flipCard() { fcFlipped = !fcFlipped; document.getElementById('fc').classList.toggle('flipped', fcFlipped); }
+function nextCard() { fcIdx = (fcIdx + 1) % cards.length; renderCard(); }
+function prevCard() { fcIdx = (fcIdx - 1 + cards.length) % cards.length; renderCard(); }
+
+const questions = [
+  { q: "What is an Accident in Aristotle's categories?", opts: ["A mistake or error", "A property that exists in a substance", "The substance itself", "A universal term"], a: 1 },
+  { q: "Which is a Type A (Universal Affirmative) proposition?", opts: ["Some nurses are tired", "No patients are stable", "All nurses are healthcare workers", "Some students are not athletes"], a: 2 },
+  { q: "What is the standard form of a Universal Negative (Type E) proposition?", opts: ["All S are P", "Some S are P", "Some S are not P", "No S are P"], a: 3 },
+  { q: "Which statement is a Type I proposition?", opts: ["All doctors are professionals", "No cats are reptiles", "Some students are athletes", "Some dogs are not friendly"], a: 2 },
+  { q: "Which expresses a Type O proposition?", opts: ["All fruits are sweet", "No fruits are vegetables", "Some fruits are sweet", "Some fruits are not sweet"], a: 3 },
+  { q: "What is the role of the Copula in a proposition?", opts: ["To describe the subject", "To quantify the subject", "To link subject and predicate", "To negate the predicate"], a: 2 },
+  { q: "What is a Nominal Definition?", opts: ["Explains what the thing really is", "Defines by genus and specific difference", "Explains the meaning of the name/term", "Defines using accidental characteristics"], a: 2 },
+  { q: "Why is 'Bird is an animal' a bad definition?", opts: ["Too narrow", "Too broad", "Circular", "Negative"], a: 1 },
+  { q: "Which is the Specific Difference in: 'Man is an animal that is rational'?", opts: ["Animal", "Man", "Rational", "Being"], a: 2 },
+  { q: "Which is NOT a categorical proposition?", opts: ["All humans are mortal", "Some dogs are friendly", "Open the door!", "No clouds are cotton candy"], a: 2 },
+  { q: "Identify the predicament: 'Socrates is in Athens.'", opts: ["Habit", "Position", "Place", "Relation"], a: 2 },
+  { q: "Identify the predicament: 'The dog is sleeping.'", opts: ["Passion", "Action", "Position", "Quality"], a: 1 },
+  { q: "'Nursing assessment is the process of assessing a patient' violates which rule?", opts: ["Too broad", "Too narrow", "Circular", "Slanted"], a: 2 },
+  { q: "Which definition type uses genus + specific difference?", opts: ["Nominal", "Accidental", "Denotative", "Essential"], a: 3 },
+  { q: "'Some patients are not stable' is what type of proposition?", opts: ["Type A", "Type E", "Type I", "Type O"], a: 3 }
+];
+
+let answered = new Array(questions.length).fill(false), score = 0;
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-questions');
+  c.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const d = document.createElement('div');
+    d.className = 'quiz-card';
+    d.innerHTML = `
+      <div class="quiz-q"><span class="quiz-num">Q${qi+1}</span>${q.q}</div>
+      <div class="options">${q.opts.map((o, oi) => `
+        <button class="option-btn" onclick="answerQ(${qi},${oi},this)" ${answered[qi]?'disabled':''}>
+          <span class="option-letter">${['A','B','C','D'][oi]}</span>${o}
+        </button>`).join('')}
+      </div>
+      <div class="feedback" id="fb-${qi}"></div>`;
+    c.appendChild(d);
+  });
+}
+
+function answerQ(qi, chosen, btn) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const q = questions[qi];
+  btn.closest('.options').querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+  const fb = document.getElementById(`fb-${qi}`);
+  if (chosen === q.a) {
+    btn.classList.add('correct'); score++;
+    fb.textContent = '✓ Correct!'; fb.className = 'feedback correct';
+  } else {
+    btn.classList.add('wrong');
+    btn.closest('.options').querySelectorAll('.option-btn')[q.a].classList.add('correct');
+    fb.textContent = `✗ Correct answer: "${q.opts[q.a]}"`;
+    fb.className = 'feedback wrong';
+  }
+  document.getElementById('score-display').textContent = `${score} / ${questions.length}`;
+}
+
+function resetQuiz() {
+  answered = new Array(questions.length).fill(false);
+  score = 0;
+  document.getElementById('score-display').textContent = `0 / ${questions.length}`;
+  buildQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+renderCard();
+buildQuiz();
+</script>
+</body>
+</html>
